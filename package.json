@@ -1,0 +1,15 @@
+{
+  "name": "customxml2json",
+  "version": "1.0.0",
+  "description": "Custom XML to JSON parser",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec"
+  },
+  "author": "Daniel Villalba",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
+  }
+}
