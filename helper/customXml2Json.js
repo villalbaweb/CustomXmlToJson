@@ -41,12 +41,18 @@ exports.processXML = function(xml) {
     }
 
     var jsonResult = this.jsonStringify(jsonObject);
-    console.log(jsonResult);
     
     return jsonResult;
 }
 
 exports.addProperty = function (object, nodes, value) {
+
+    if( object === null || 
+        object === '' || 
+        object === undefined ||
+        nodes === null ||
+        nodes === undefined ) return null;
+
     var properties = nodes.slice();
     var last = object;
     while (properties.length) {

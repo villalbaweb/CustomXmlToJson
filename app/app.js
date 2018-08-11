@@ -18,7 +18,8 @@ rl.question('Please enter a XML string...: ', (answer) => {
     console.log(startingMsg);
 
     if(answer.length > 0) {
-        customParser.processXML(answer);
+        var result = customParser.processXML(answer);
+        console.log(`\nParsed JSON object:\n ${result}\n`);
     }
 
     rl.close();

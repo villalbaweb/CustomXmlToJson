@@ -33,8 +33,9 @@ describe('XML to JSON custom parser tests', function() {
   });
 
   describe('addProperty function validations', function() {
+
     it('should return an object from a parameters input', function() {
-      
+
       var jsonObject = {
         address: {
           city: 'Guadalajara',
@@ -65,6 +66,135 @@ describe('XML to JSON custom parser tests', function() {
       };
       expect(addpropertyResult).to.deep.equal(jsonObjectExpected);
     });
+
+    it('should return the same object if there isn\'t any node stored in the nodes array', function() {
+
+      var jsonObject = {
+        address: {
+          city: 'Guadalajara',
+          street: 'Chapultepec'
+        }
+      };
+      var addpropertyResult = customParser.addProperty(jsonObject, [], 'Daniel');
+
+      var jsonObjectExpected = {
+        address: {
+          city: 'Guadalajara',
+          street: 'Chapultepec'
+        }
+      };
+      expect(addpropertyResult).to.deep.equal(jsonObjectExpected);
+    });
+
+    it('should return null if nodes array is null', function() {
+
+      var jsonObject = {
+        address: {
+          city: 'Guadalajara',
+          street: 'Chapultepec'
+        }
+      };
+      var addpropertyResult = customParser.addProperty(jsonObject, null, 'Daniel');
+
+      expect(addpropertyResult).to.deep.equal(null);
+    });
+
+    it('should return null if nodes array is undefined', function() {
+
+      var jsonObject = {
+        address: {
+          city: 'Guadalajara',
+          street: 'Chapultepec'
+        }
+      };
+      var addpropertyResult = customParser.addProperty(jsonObject, null, 'Daniel');
+
+      expect(addpropertyResult).to.deep.equal(null);
+    });
+
+    it('should return an object with a new property with an empty string value if the value is null', function() {
+
+      var jsonObject = {
+        address: {
+          city: 'Guadalajara',
+          street: 'Chapultepec'
+        }
+      };
+      var addpropertyResult = customParser.addProperty(jsonObject, ['nombre'], '');
+
+      var jsonObjectExpected = {
+        address: {
+          city: 'Guadalajara',
+          street: 'Chapultepec'
+        },
+        nombre: ''
+      };
+      expect(addpropertyResult).to.deep.equal(jsonObjectExpected);
+    });
+    
+    it('should return an object with a new property with an empty string if the value is an empty string', function() {
+
+      var jsonObject = {
+        address: {
+          city: 'Guadalajara',
+          street: 'Chapultepec'
+        }
+      };
+      var addpropertyResult = customParser.addProperty(jsonObject, ['nombre'], '');
+
+      var jsonObjectExpected = {
+        address: {
+          city: 'Guadalajara',
+          street: 'Chapultepec'
+        },
+        nombre: ''
+      };
+      expect(addpropertyResult).to.deep.equal(jsonObjectExpected);
+    });
+
+    it('should return an object with a new property with an empty string value if the value is undefined', function() {
+
+      var jsonObject = {
+        address: {
+          city: 'Guadalajara',
+          street: 'Chapultepec'
+        }
+      };
+      var addpropertyResult = customParser.addProperty(jsonObject, ['nombre'], undefined);
+
+      var jsonObjectExpected = {
+        address: {
+          city: 'Guadalajara',
+          street: 'Chapultepec'
+        },
+        nombre: undefined
+      };
+      expect(addpropertyResult).to.deep.equal(jsonObjectExpected);
+    });
+    
+    it('should return null if the object parameter is null', function() {
+
+      var addpropertyResult = customParser.addProperty(null, ['nombre'], 'Daniel');
+
+      var jsonObjectExpected = null;
+
+      expect(addpropertyResult).to.deep.equal(jsonObjectExpected);
+    });
+
+    it('should return null if the object parameter is empty string', function() {
+
+      var addpropertyResult = customParser.addProperty( '', ['nombre'], 'Daniel');
+
+      expect(addpropertyResult).to.deep.equal(null);
+    });
+
+    it('should return null if the object parameter is undefined', function() {
+
+      var addpropertyResult = customParser.addProperty( '', ['nombre'], 'Daniel');
+
+      expect(addpropertyResult).to.deep.equal(null);
+    });
+
   });
 
   describe('jsonStringify function validations', function() {
