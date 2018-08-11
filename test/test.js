@@ -35,26 +35,26 @@ describe('XML to JSON custom parser tests', function() {
   describe('addProperty function validations', function() {
 
     it('should return an object from a parameters input', function() {
-
       var jsonObject = {
         address: {
           city: 'Guadalajara',
           street: 'Chapultepec'
         }
       };
+
       var addpropertyResult = customParser.addProperty(jsonObject, ['name'], 'Daniel');
 
       expect(addpropertyResult).to.be.a('object');
     });
 
     it('should return an object with a new property based on parameters input', function() {
-      
       var jsonObject = {
         address: {
           city: 'Guadalajara',
           street: 'Chapultepec'
         }
       };
+
       var addpropertyResult = customParser.addProperty(jsonObject, ['name'], 'Daniel');
 
       var jsonObjectExpected = {
@@ -64,17 +64,18 @@ describe('XML to JSON custom parser tests', function() {
         },
         name: 'Daniel'
       };
+
       expect(addpropertyResult).to.deep.equal(jsonObjectExpected);
     });
 
     it('should return the same object if there isn\'t any node stored in the nodes array', function() {
-
       var jsonObject = {
         address: {
           city: 'Guadalajara',
           street: 'Chapultepec'
         }
       };
+
       var addpropertyResult = customParser.addProperty(jsonObject, [], 'Daniel');
 
       var jsonObjectExpected = {
@@ -83,43 +84,44 @@ describe('XML to JSON custom parser tests', function() {
           street: 'Chapultepec'
         }
       };
+
       expect(addpropertyResult).to.deep.equal(jsonObjectExpected);
     });
 
     it('should return null if nodes array is null', function() {
-
       var jsonObject = {
         address: {
           city: 'Guadalajara',
           street: 'Chapultepec'
         }
       };
+
       var addpropertyResult = customParser.addProperty(jsonObject, null, 'Daniel');
 
       expect(addpropertyResult).to.deep.equal(null);
     });
 
     it('should return null if nodes array is undefined', function() {
-
       var jsonObject = {
         address: {
           city: 'Guadalajara',
           street: 'Chapultepec'
         }
       };
+
       var addpropertyResult = customParser.addProperty(jsonObject, null, 'Daniel');
 
       expect(addpropertyResult).to.deep.equal(null);
     });
 
     it('should return an object with a new property with an empty string value if the value is null', function() {
-
       var jsonObject = {
         address: {
           city: 'Guadalajara',
           street: 'Chapultepec'
         }
       };
+
       var addpropertyResult = customParser.addProperty(jsonObject, ['nombre'], '');
 
       var jsonObjectExpected = {
@@ -129,17 +131,18 @@ describe('XML to JSON custom parser tests', function() {
         },
         nombre: ''
       };
+
       expect(addpropertyResult).to.deep.equal(jsonObjectExpected);
     });
     
     it('should return an object with a new property with an empty string if the value is an empty string', function() {
-
       var jsonObject = {
         address: {
           city: 'Guadalajara',
           street: 'Chapultepec'
         }
       };
+
       var addpropertyResult = customParser.addProperty(jsonObject, ['nombre'], '');
 
       var jsonObjectExpected = {
@@ -149,17 +152,18 @@ describe('XML to JSON custom parser tests', function() {
         },
         nombre: ''
       };
+
       expect(addpropertyResult).to.deep.equal(jsonObjectExpected);
     });
 
     it('should return an object with a new property with an empty string value if the value is undefined', function() {
-
       var jsonObject = {
         address: {
           city: 'Guadalajara',
           street: 'Chapultepec'
         }
       };
+
       var addpropertyResult = customParser.addProperty(jsonObject, ['nombre'], undefined);
 
       var jsonObjectExpected = {
@@ -169,28 +173,24 @@ describe('XML to JSON custom parser tests', function() {
         },
         nombre: undefined
       };
+
       expect(addpropertyResult).to.deep.equal(jsonObjectExpected);
     });
     
     it('should return null if the object parameter is null', function() {
-
       var addpropertyResult = customParser.addProperty(null, ['nombre'], 'Daniel');
 
-      var jsonObjectExpected = null;
-
-      expect(addpropertyResult).to.deep.equal(jsonObjectExpected);
+      expect(addpropertyResult).to.deep.equal(null);
     });
 
     it('should return null if the object parameter is empty string', function() {
-
       var addpropertyResult = customParser.addProperty( '', ['nombre'], 'Daniel');
 
       expect(addpropertyResult).to.deep.equal(null);
     });
 
     it('should return null if the object parameter is undefined', function() {
-
-      var addpropertyResult = customParser.addProperty( '', ['nombre'], 'Daniel');
+      var addpropertyResult = customParser.addProperty( undefined, ['nombre'], 'Daniel');
 
       expect(addpropertyResult).to.deep.equal(null);
     });
@@ -198,26 +198,82 @@ describe('XML to JSON custom parser tests', function() {
   });
 
   describe('jsonStringify function validations', function() {
+
     it('should return a string from a valid JSON object', function() {
-      
       var jsonObject = {
         address: {
           city: 'Guadalajara',
           street: 'Chapultepec'
         }
       };
+
       var stringifyResult = customParser.jsonStringify(jsonObject);
 
       expect(stringifyResult).to.be.a('string');
     });
+
+    it('should return null from a null input', function() {
+      var stringifyResult = customParser.jsonStringify(null);
+
+      expect(stringifyResult).to.equal(null);
+    });
+
+    it('should return null from a empty string input', function() {
+      var stringifyResult = customParser.jsonStringify('');
+
+      expect(stringifyResult).to.equal(null);
+    });
+
+    it('should return null from an undefined input', function() {
+      var stringifyResult = customParser.jsonStringify(undefined);
+
+      expect(stringifyResult).to.equal(null);
+    });
+
   });
 
   describe('isCharMatch function validations', function() {
-    it('should return true if the looked for character is included in the characters array', function() {
 
+    it('should return true if the characterToCheck is included in the characterArray', function() {
       var isIncluded = customParser.isCharMatch('<', ['<', '/', '>']);
-      
       expect(isIncluded).to.equal(true);
     });
+
+    it('should return false if the characterToCheck is not included in the characterArray', function() {
+      var isIncluded = customParser.isCharMatch('X', ['<', '/', '>']);
+      expect(isIncluded).to.equal(false);
+    });
+
+    it('should return false if the characterToCheck is empty string', function() {
+      var isIncluded = customParser.isCharMatch('<', '');
+      expect(isIncluded).to.equal(false);
+    });
+
+    it('should return false if the characterToCheck is null', function() {
+      var isIncluded = customParser.isCharMatch('<', null);
+      expect(isIncluded).to.equal(false);
+    });
+
+    it('should return false if the characterToCheck is undefined', function() {
+      var isIncluded = customParser.isCharMatch('<', undefined);
+      expect(isIncluded).to.equal(false);
+    });
+
+    it('should return false if the characterArray is an empty array', function() {
+      var isIncluded = customParser.isCharMatch('<', []);
+      expect(isIncluded).to.equal(false);
+    });
+
+    it('should return false if the characterArray is null', function() {
+      var isIncluded = customParser.isCharMatch('<', null);
+      expect(isIncluded).to.equal(false);
+    });
+
+    it('should return false if the characterArray is undefined', function() {
+      var isIncluded = customParser.isCharMatch('<', undefined);
+      expect(isIncluded).to.equal(false);
+    });
+
   });
+
 });

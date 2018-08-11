@@ -68,9 +68,9 @@ exports.addProperty = function (object, nodes, value) {
 }
 
 exports.isCharMatch = function(characterToCheck, characterArray) {
-    return characterArray.includes(characterToCheck);
+    return characterArray === null || characterArray === undefined ? false : characterArray.includes(characterToCheck);
 }
 
 exports.jsonStringify = function(json) {
-    return JSON.stringify(json);
+    return json === null || json === '' || json === undefined ? null : JSON.stringify(json);
 }
