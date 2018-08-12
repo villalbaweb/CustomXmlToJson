@@ -53,24 +53,27 @@ exports.addProperty = function (object, nodes, value) {
         nodes === null ||
         nodes === undefined ) return null;
 
-    var properties = nodes.slice();
+    var tags = nodes.slice();
     var last = object;
-    while (properties.length) {
-        var prop = properties.shift();
-        if (properties.length > 0) {
-            last[prop] = last[prop] || {};
-            last = last[prop];
+    while (tags.length) {
+        var tag = tags.shift();
+        if (tags.length > 0) {
+            last[tag] = last[tag] || {};
+            last = last[tag];
         } else {
-            last[prop] = value;
+            last[tag] = value;
         }
     }
+
     return last;
 }
 
 exports.isCharMatch = function(characterToCheck, characterArray) {
-    return characterArray === null || characterArray === undefined ? false : characterArray.includes(characterToCheck);
+    var isInvalidArray = characterArray === null || characterArray === undefined;
+    return isInvalidArray ? false : characterArray.includes(characterToCheck);
 }
 
 exports.jsonStringify = function(json) {
-    return json === null || json === '' || json === undefined ? null : JSON.stringify(json);
+    var isInvalidJson = json === null || json === '' || json === undefined;
+    return isInvalidJson ? null : JSON.stringify(json);
 }
