@@ -1,4 +1,8 @@
 exports.processXML = function(xml) {
+
+    var isInvalidString = xml === null || xml === undefined || xml === '';
+    if(isInvalidString) return null;
+
     var jsonObject = {};
     var isOpeningDetected = false;
     var isClosingTagDetected = false;

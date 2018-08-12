@@ -1,18 +1,28 @@
 var expect    = require('chai').expect;
 var customParser = require('../helper/customXml2Json');
 
-describe('XML to JSON custom parser tests', function() {
+describe('\nXML to JSON custom parser tests', function() {
 
-  describe('processXML function validations', function() {
+  describe('\nprocessXML function validations', function() {
     
     it('should return a string from a valid XML input', function() {
       var parsedResult = customParser.processXML('<address><city>Guadalajara</city><street>Chapultepec</street></address>');
       expect(parsedResult).to.be.a('string');
     });
 
-    it('should return a empty JSON string from a empty XML input', function() {
+    it('should return a null from a empty XML input', function() {
       var parsedResult = customParser.processXML('');
-      expect(parsedResult).to.equal('{}');
+      expect(parsedResult).to.equal(null);
+    });
+
+    it('should return a null from a null XML input', function() {
+      var parsedResult = customParser.processXML(null);
+      expect(parsedResult).to.equal(null);
+    });
+
+    it('should return a null from an undefined XML input', function() {
+      var parsedResult = customParser.processXML(undefined);
+      expect(parsedResult).to.equal(null);
     });
 
     it('should return a parsed valid JSON string from a valid XML input', function() {
@@ -32,7 +42,7 @@ describe('XML to JSON custom parser tests', function() {
 
   });
 
-  describe('addProperty function validations', function() {
+  describe('\naddProperty function validations', function() {
 
     it('should return an object from a parameters input', function() {
       var jsonObject = {
@@ -197,7 +207,7 @@ describe('XML to JSON custom parser tests', function() {
 
   });
 
-  describe('jsonStringify function validations', function() {
+  describe('\njsonStringify function validations', function() {
 
     it('should return a string from a valid JSON object', function() {
       var jsonObject = {
@@ -232,7 +242,7 @@ describe('XML to JSON custom parser tests', function() {
 
   });
 
-  describe('isCharMatch function validations', function() {
+  describe('\nisCharMatch function validations', function() {
 
     it('should return true if the characterToCheck is included in the characterArray', function() {
       var isIncluded = customParser.isCharMatch('<', ['<', '/', '>']);
